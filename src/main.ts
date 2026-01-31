@@ -56,7 +56,7 @@ export default class VaultSnapshotPlugin extends Plugin {
 
 			const outputPath =
 				this.configPath +
-				"/plugins/obsidian-vault-snapshot/" +
+				"/plugins/vault-snapshot/" +
 				this.settings.outputFilename;
 
 			await this.app.vault.adapter.write(outputPath, snapshotContent);
