@@ -6,25 +6,26 @@ import {
 } from "./settings";
 import { VaultScraper } from "./scraper";
 import { MetadataExtractor } from "./extractor";
-import { ManifestGenerator } from "./generator";
+import { SnapshotGenerator } from "./generator";
 
 export default class FolderSnapshotPlugin extends Plugin {
 	settings: FolderSnapshotSettings;
+	configPath = this.app.vault.configDir;
 
 	async onload() {
 		await this.loadSettings();
 
 		this.addCommand({
-			id: "create-manifest",
-			name: "Create manifest",
-			callback: () => this.createManifest(),
+			id: "create-snapshot",
+			name: "Create snapshot",
+			callback: () => this.createSnapshot(),
 		});
 
 		this.addSettingTab(new FolderSnapshotSettingTab(this.app, this));
 	}
 
-	async createManifest() {
-		new Notice("Folder snapshot: generating manifest...");
+	async createSnapshot() {
+		new Notice("Folder snapshot: generating snapshot...");
 
 		try {
 			const scraper = new VaultScraper(this.app.vault);
@@ -40,25 +41,28 @@ export default class FolderSnapshotPlugin extends Plugin {
 				return MetadataExtractor.extract(file, cache);
 			});
 
-			const manifestContent = ManifestGenerator.generate(
+			const snapshotContent = SnapshotGenerator.generate(
 				metadataList,
 				this.settings.targetFolder,
 			);
 
-			const outputPath = this.settings.outputFilename;
+			const outputPath =
+				this.configPath +
+				"/plugins/obsidian-folder-snapshot/" +
+				this.settings.outputFilename;
 			const existingFile =
 				this.app.vault.getAbstractFileByPath(outputPath);
 
 			if (existingFile instanceof TFile) {
-				await this.app.vault.modify(existingFile, manifestContent);
+				await this.app.vault.modify(existingFile, snapshotContent);
 			} else {
-				await this.app.vault.create(outputPath, manifestContent);
+				await this.app.vault.create(outputPath, snapshotContent);
 			}
 
-			new Notice(`Manifest created: ${outputPath}`);
+			new Notice(`Snapshot created: ${outputPath}`);
 		} catch (error) {
 			console.error("Folder snapshot error:", error);
-			new Notice("Failed to create manifest. Check console for details.");
+			new Notice("Failed to create snapshot. Check console for details.");
 		}
 	}
 

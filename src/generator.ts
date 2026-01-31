@@ -1,6 +1,6 @@
 import { FileMetadata } from "./extractor";
 
-export class ManifestGenerator {
+export class SnapshotGenerator {
 	static generate(files: FileMetadata[], targetFolder: string): string {
 		const header = this.generateHeader(targetFolder);
 		const body = this.generateBody(files);

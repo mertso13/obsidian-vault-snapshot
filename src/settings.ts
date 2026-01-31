@@ -8,7 +8,7 @@ export interface FolderSnapshotSettings {
 
 export const DEFAULT_SETTINGS: FolderSnapshotSettings = {
 	targetFolder: "/",
-	outputFilename: "folder-manifest.md",
+	outputFilename: "folder-snapshot.md",
 };
 
 export class FolderSnapshotSettingTab extends PluginSettingTab {
@@ -39,10 +39,10 @@ export class FolderSnapshotSettingTab extends PluginSettingTab {
 
 		new Setting(containerEl)
 			.setName("Output filename")
-			.setDesc("The name of the generated manifest file.")
+			.setDesc("The name of the generated snapshot file.")
 			.addText((text) =>
 				text
-					.setPlaceholder("Folder-manifest.md")
+					.setPlaceholder("Folder-snapshot.md")
 					.setValue(this.plugin.settings.outputFilename)
 					.onChange(async (value) => {
 						this.plugin.settings.outputFilename = value;
