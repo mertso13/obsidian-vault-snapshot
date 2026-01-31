@@ -4,11 +4,13 @@ import VaultSnapshotPlugin from "./main";
 export interface VaultSnapshotSettings {
 	targetFolder: string;
 	outputFilename: string;
+	excludedPatterns: string;
 }
 
 export const DEFAULT_SETTINGS: VaultSnapshotSettings = {
 	targetFolder: "/",
 	outputFilename: "vault-snapshot.md",
+	excludedPatterns: "",
 };
 
 export class VaultSnapshotSettingTab extends PluginSettingTab {
@@ -46,6 +48,21 @@ export class VaultSnapshotSettingTab extends PluginSettingTab {
 					.setValue(this.plugin.settings.outputFilename)
 					.onChange(async (value) => {
 						this.plugin.settings.outputFilename = value;
+						await this.plugin.saveSettings();
+					}),
+			);
+
+		new Setting(containerEl)
+			.setName("Excluded patterns")
+			.setDesc(
+				"Enter folder paths or filenames to exclude (one per line)",
+			)
+			.addTextArea((text) =>
+				text
+					.setPlaceholder("Private\ntemplates\nsecret.md")
+					.setValue(this.plugin.settings.excludedPatterns)
+					.onChange(async (value) => {
+						this.plugin.settings.excludedPatterns = value;
 						await this.plugin.saveSettings();
 					}),
 			);

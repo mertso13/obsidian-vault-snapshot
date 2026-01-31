@@ -1,4 +1,4 @@
-import { Notice, Plugin, TFile } from "obsidian";
+import { Notice, Plugin } from "obsidian";
 import {
 	DEFAULT_SETTINGS,
 	VaultSnapshotSettings,
@@ -29,7 +29,15 @@ export default class VaultSnapshotPlugin extends Plugin {
 
 		try {
 			const scraper = new VaultScraper(this.app.vault);
-			const files = scraper.getFiles(this.settings.targetFolder);
+			const exclusions = this.settings.excludedPatterns
+				.split("\n")
+				.map((p) => p.trim())
+				.filter((p) => p.length > 0);
+
+			const files = scraper.getFiles(
+				this.settings.targetFolder,
+				exclusions,
+			);
 
 			if (files.length === 0) {
 				new Notice(`No notes found in: ${this.settings.targetFolder}`);
@@ -50,14 +58,8 @@ export default class VaultSnapshotPlugin extends Plugin {
 				this.configPath +
 				"/plugins/obsidian-vault-snapshot/" +
 				this.settings.outputFilename;
-			const existingFile =
-				this.app.vault.getAbstractFileByPath(outputPath);
 
-			if (existingFile instanceof TFile) {
-				await this.app.vault.modify(existingFile, snapshotContent);
-			} else {
-				await this.app.vault.create(outputPath, snapshotContent);
-			}
+			await this.app.vault.adapter.write(outputPath, snapshotContent);
 
 			new Notice(`Snapshot created: ${outputPath}`);
 		} catch (error) {
