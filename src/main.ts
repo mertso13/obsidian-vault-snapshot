@@ -1,4 +1,4 @@
-import { Plugin } from "obsidian";
+import { Notice, Plugin } from "obsidian";
 import {
 	DEFAULT_SETTINGS,
 	FolderSnapshotSettings,
@@ -10,6 +10,16 @@ export default class FolderSnapshotPlugin extends Plugin {
 
 	async onload() {
 		await this.loadSettings();
+
+		this.addCommand({
+			id: "create-manifest",
+			name: "Create manifest",
+			callback: () => {
+				new Notice(
+					"Folder snapshot manifest generation not yet implemented.",
+				);
+			},
+		});
 
 		this.addSettingTab(new FolderSnapshotSettingTab(this.app, this));
 	}
