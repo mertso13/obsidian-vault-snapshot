@@ -1,6 +1,6 @@
 # Vault Snapshot
 
-![Tests](https://img.shields.io/github/actions/workflow/status/mertso13/obsidian-vault-snapshot/lint.yml?branch=main&label=tests&logo=obsidian&logoColor=white&color=8b6bef&style=flat-square)
+![Tests](https://img.shields.io/github/actions/workflow/status/mertso13/obsidian-vault-snapshot/lint.yml?branch=master&label=tests&logo=obsidian&logoColor=white&color=8b6bef&style=flat-square)
 
 **Vault Snapshot** is a lightweight Obsidian plugin that generates a condensed Markdown summary of your entire vault or specific folders. It extracts titles, tags, and internal links from your notes, providing a flat, portable manifest ideal for:
 
