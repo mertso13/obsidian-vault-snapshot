@@ -1,15 +1,15 @@
 import { Notice, Plugin, TFile } from "obsidian";
 import {
 	DEFAULT_SETTINGS,
-	FolderSnapshotSettings,
-	FolderSnapshotSettingTab,
+	VaultSnapshotSettings,
+	VaultSnapshotSettingTab,
 } from "./settings";
 import { VaultScraper } from "./scraper";
 import { MetadataExtractor } from "./extractor";
 import { SnapshotGenerator } from "./generator";
 
-export default class FolderSnapshotPlugin extends Plugin {
-	settings: FolderSnapshotSettings;
+export default class VaultSnapshotPlugin extends Plugin {
+	settings: VaultSnapshotSettings;
 	configPath = this.app.vault.configDir;
 
 	async onload() {
@@ -21,11 +21,11 @@ export default class FolderSnapshotPlugin extends Plugin {
 			callback: () => this.createSnapshot(),
 		});
 
-		this.addSettingTab(new FolderSnapshotSettingTab(this.app, this));
+		this.addSettingTab(new VaultSnapshotSettingTab(this.app, this));
 	}
 
 	async createSnapshot() {
-		new Notice("Folder snapshot: generating snapshot...");
+		new Notice("Vault snapshot: generating snapshot...");
 
 		try {
 			const scraper = new VaultScraper(this.app.vault);
@@ -48,7 +48,7 @@ export default class FolderSnapshotPlugin extends Plugin {
 
 			const outputPath =
 				this.configPath +
-				"/plugins/obsidian-folder-snapshot/" +
+				"/plugins/obsidian-vault-snapshot/" +
 				this.settings.outputFilename;
 			const existingFile =
 				this.app.vault.getAbstractFileByPath(outputPath);
@@ -61,7 +61,7 @@ export default class FolderSnapshotPlugin extends Plugin {
 
 			new Notice(`Snapshot created: ${outputPath}`);
 		} catch (error) {
-			console.error("Folder snapshot error:", error);
+			console.error("Vault snapshot error:", error);
 			new Notice("Failed to create snapshot. Check console for details.");
 		}
 	}
@@ -70,7 +70,7 @@ export default class FolderSnapshotPlugin extends Plugin {
 		this.settings = Object.assign(
 			{},
 			DEFAULT_SETTINGS,
-			(await this.loadData()) as Partial<FolderSnapshotSettings>,
+			(await this.loadData()) as Partial<VaultSnapshotSettings>,
 		);
 	}
 

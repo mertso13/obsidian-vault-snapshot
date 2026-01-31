@@ -1,20 +1,20 @@
 import { App, PluginSettingTab, Setting } from "obsidian";
-import FolderSnapshotPlugin from "./main";
+import VaultSnapshotPlugin from "./main";
 
-export interface FolderSnapshotSettings {
+export interface VaultSnapshotSettings {
 	targetFolder: string;
 	outputFilename: string;
 }
 
-export const DEFAULT_SETTINGS: FolderSnapshotSettings = {
+export const DEFAULT_SETTINGS: VaultSnapshotSettings = {
 	targetFolder: "/",
-	outputFilename: "folder-snapshot.md",
+	outputFilename: "vault-snapshot.md",
 };
 
-export class FolderSnapshotSettingTab extends PluginSettingTab {
-	plugin: FolderSnapshotPlugin;
+export class VaultSnapshotSettingTab extends PluginSettingTab {
+	plugin: VaultSnapshotPlugin;
 
-	constructor(app: App, plugin: FolderSnapshotPlugin) {
+	constructor(app: App, plugin: VaultSnapshotPlugin) {
 		super(app, plugin);
 		this.plugin = plugin;
 	}
@@ -42,7 +42,7 @@ export class FolderSnapshotSettingTab extends PluginSettingTab {
 			.setDesc("The name of the generated snapshot file.")
 			.addText((text) =>
 				text
-					.setPlaceholder("Folder-snapshot.md")
+					.setPlaceholder("Vault-snapshot.md")
 					.setValue(this.plugin.settings.outputFilename)
 					.onChange(async (value) => {
 						this.plugin.settings.outputFilename = value;

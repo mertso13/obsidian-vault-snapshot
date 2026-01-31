@@ -1,9 +1,9 @@
 {
-	"id": "obsidian-folder-snapshot",
-	"name": "Folder Snapshot",
+	"id": "obsidian-vault-snapshot",
+	"name": "Vault Snapshot",
 	"version": "1.0.0",
 	"minAppVersion": "0.15.0",
-	"description": "Scrape a target folder and extract metadata.",
+	"description": "Generate a condensed Markdown snapshot of your entire vault or specific folders.",
 	"author": "mertso13",
 	"authorUrl": "https://github.com/mertso13",
 	"isDesktopOnly": false
