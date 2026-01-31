@@ -21,4 +21,41 @@ describe("SnapshotGenerator", () => {
 			expect(result).toContain(new Date().toLocaleString());
 		});
 	});
+
+	describe("generateBody", () => {
+		it("should return a placeholder message if the file list is empty", () => {
+			const result = (SnapshotGenerator as any).generateBody([]);
+			expect(result).toBe("_No notes found in this folder._");
+		});
+
+		it("should format a list of files with tags and links", () => {
+			const files = [
+				{
+					title: "Note 1",
+					tags: ["#tag1", "#tag2"],
+					links: ["Link 1", "Link 2"],
+				},
+				{
+					title: "Note 2",
+					tags: [],
+					links: ["Link 3"],
+				},
+			];
+			const result = (SnapshotGenerator as any).generateBody(files);
+			expect(result).toContain("- **Note 1** #tag1 #tag2 -> [[Link 1]], [[Link 2]]");
+			expect(result).toContain("- **Note 2** -> [[Link 3]]");
+		});
+
+		it("should format files without tags or links correctly", () => {
+			const files = [
+				{
+					title: "Note 1",
+					tags: [],
+					links: [],
+				},
+			];
+			const result = (SnapshotGenerator as any).generateBody(files);
+			expect(result).toBe("- **Note 1**");
+		});
+	});
 });
