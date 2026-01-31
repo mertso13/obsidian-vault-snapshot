@@ -4,7 +4,6 @@
 
 **Vault Snapshot** is a lightweight Obsidian plugin that generates a condensed Markdown summary of your entire vault or specific folders. It extracts titles, tags, and internal links from your notes, providing a flat, portable manifest ideal for:
 
-- Sharing your vault structure on platforms like GitHub.
 - Providing concise context to LLMs without revealing content of your notes.
 - Creating a searchable backup of your metadata.
 
@@ -12,7 +11,7 @@
 
 - **Vault & Folder Scraping:** Recursively scans your entire vault or a user-defined folder.
 - **Metadata Extraction:** Captures titles, tags (frontmatter & inline), and internal links.
-- **Exclusion Rules:** Skip specific folders or files (e.g., `Private/`, `Templates/`) to keep your snapshot clean.
+- **Exclusion Rules:** Skip specific folders or files to keep your snapshot clean.
 - **Output:** Generates the snapshot file within the plugin's configuration directory to avoid cluttering your vault's file explorer.
 
 ## Usage
